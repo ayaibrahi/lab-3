@@ -1,0 +1,32 @@
+
+  
+  <div class="row  ">
+    @for (item of filteredproduct; track item.id) {
+      <div appProductCard class="col-md-4 card rounded-5 mb-3 ">
+        @if (item.isPurchased) {
+          <h3 class="text-center mt-5 ">Thanks For Purchasing from our Store : {{ClientName}}</h3>
+        }@else {
+          <img class="card-img-top rounded-5 " [src]="item.PrdimgURL" alt="">
+        }
+        <h4 class="text-center text-primary ">{{item.name}}</h4>
+        <h4 class="">{{item.price}}$</h4>
+        <h4 class="text-start" [ngStyle]="{backgroundColor:item.quantity<=1?'yellow':''}">
+          @switch (item.quantity) {
+            @case (1) {Last one item}
+            @case (2) {Last Two Items}
+            @case (0) {Out Of Stock} 
+            @default {In Stock : {{item.quantity}}}
+          }
+        </h4>
+        <h4>{{item.cardNumber|creditCardPipe }}</h4>
+        <h4 class="text-end text-info ">{{item.category}}</h4>
+        <button [disabled]="item.quantity===0" 
+        (click)="togglepurchase(item.id)" 
+        (click)="addToCart(item)"
+        class="btn btn-info rounded-4 mb-2">
+          Add To Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+      </div>
+    }
+  </div>
+  
+  
